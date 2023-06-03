@@ -1,0 +1,115 @@
+Only in src: build
+Only in src: install
+Only in src: log
+Only in src/ros2: .git
+Only in src/ros2: .github
+Only in src/ros2: README.md
+Only in src/ros2: ros2.repos
+diff '--color=auto' --unified --recursive --text src_unpatched/ros2/src/eProsima/Fast-DDS/include/fastdds/rtps/transport/TransportDescriptorInterface.h src/ros2/src/eProsima/Fast-DDS/include/fastdds/rtps/transport/TransportDescriptorInterface.h
+--- src_unpatched/ros2/src/eProsima/Fast-DDS/include/fastdds/rtps/transport/TransportDescriptorInterface.h	2023-06-03 12:07:41.663312439 +1000
++++ src/ros2/src/eProsima/Fast-DDS/include/fastdds/rtps/transport/TransportDescriptorInterface.h	2023-06-03 12:27:03.027756124 +1000
+@@ -17,9 +17,7 @@
+ 
+ #include <fastrtps/fastrtps_dll.h>
+ 
+-#ifdef _WIN32
+ #include <cstdint>
+-#endif // ifdef _WIN32
+ #include <vector>
+ #include <string>
+ 
+diff '--color=auto' --unified --recursive --text src_unpatched/ros2/src/eProsima/Fast-DDS/include/fastrtps/types/TypeNamesGenerator.h src/ros2/src/eProsima/Fast-DDS/include/fastrtps/types/TypeNamesGenerator.h
+--- src_unpatched/ros2/src/eProsima/Fast-DDS/include/fastrtps/types/TypeNamesGenerator.h	2023-06-03 12:07:41.673312404 +1000
++++ src/ros2/src/eProsima/Fast-DDS/include/fastrtps/types/TypeNamesGenerator.h	2023-06-03 12:23:12.112318959 +1000
+@@ -4,6 +4,7 @@
+ #include <fastrtps/fastrtps_dll.h>
+ 
+ #include <string>
++#include <cstdint>
+ #include <vector>
+ 
+ namespace eprosima {
+diff '--color=auto' --unified --recursive --text src_unpatched/ros2/src/ros2/pybind11_vendor/CMakeLists.txt src/ros2/src/ros2/pybind11_vendor/CMakeLists.txt
+--- src_unpatched/ros2/src/ros2/pybind11_vendor/CMakeLists.txt	2023-06-03 12:07:42.226643773 +1000
++++ src/ros2/src/ros2/pybind11_vendor/CMakeLists.txt	2023-06-03 14:49:45.513287214 +1000
+@@ -55,7 +55,7 @@
+   include(ExternalProject)
+   ExternalProject_Add(pybind11-2.9.1
+     GIT_REPOSITORY https://github.com/pybind/pybind11.git
+-    GIT_TAG ffa346860b306c9bbfb341aed9c14c067751feb8  # v2.9.1
++    GIT_TAG 5b0a6fc2017fcc176545afe3e09c9f9885283242  # v2.10.4
+     GIT_CONFIG advice.detachedHead=false
+     # Suppress git update due to https://gitlab.kitware.com/cmake/cmake/-/issues/16419
+     # See https://github.com/ament/uncrustify_vendor/pull/22 for details
+@@ -72,9 +72,9 @@
+     # definitions for Py_DEBUG, which MSVC complains about.  This patch switches
+     # the internal pybind11 variable to be called PYBIND11_DEBUG, which avoids
+     # the issue.
+-    PATCH_COMMAND
+-      ${CMAKE_COMMAND} -E chdir <SOURCE_DIR> git apply -p1 --ignore-space-change --whitespace=nowarn
+-        ${CMAKE_CURRENT_SOURCE_DIR}/pybind11-2.9.1-fix-windows-debug.patch
++    # PATCH_COMMAND
++    #   ${CMAKE_COMMAND} -E chdir <SOURCE_DIR> git apply -p1 --ignore-space-change --whitespace=nowarn
++    #     ${CMAKE_CURRENT_SOURCE_DIR}/pybind11-2.9.1-fix-windows-debug.patch
+   )
+ 
+   # The external project will install to the build folder, but we'll install that on make install.
+diff '--color=auto' --unified --recursive --text src_unpatched/ros2/src/ros2/rclcpp/rclcpp/include/rclcpp/context.hpp src/ros2/src/ros2/rclcpp/rclcpp/include/rclcpp/context.hpp
+--- src_unpatched/ros2/src/ros2/rclcpp/rclcpp/include/rclcpp/context.hpp	2023-06-03 12:07:42.259976988 +1000
++++ src/ros2/src/ros2/rclcpp/rclcpp/include/rclcpp/context.hpp	2023-06-03 14:31:32.403365013 +1000
+@@ -26,6 +26,7 @@
+ #include <unordered_set>
+ #include <utility>
+ #include <vector>
++#include <stdexcept>
+ 
+ #include "rcl/context.h"
+ #include "rcl/guard_condition.h"
+diff '--color=auto' --unified --recursive --text src_unpatched/ros2/src/ros2/rclcpp/rclcpp/src/rclcpp/logging_mutex.cpp src/ros2/src/ros2/rclcpp/rclcpp/src/rclcpp/logging_mutex.cpp
+--- src_unpatched/ros2/src/ros2/rclcpp/rclcpp/src/rclcpp/logging_mutex.cpp	2023-06-03 12:07:42.263310309 +1000
++++ src/ros2/src/ros2/rclcpp/rclcpp/src/rclcpp/logging_mutex.cpp	2023-06-03 15:18:58.352455885 +1000
+@@ -14,6 +14,7 @@
+ 
+ #include <memory>
+ #include <mutex>
++#include <stdexcept>
+ 
+ #include "rcutils/macros.h"
+ 
+diff '--color=auto' --unified --recursive --text src_unpatched/ros2/src/ros2/rcpputils/include/rcpputils/filesystem_helper.hpp src/ros2/src/ros2/rcpputils/include/rcpputils/filesystem_helper.hpp
+--- src_unpatched/ros2/src/ros2/rcpputils/include/rcpputils/filesystem_helper.hpp	2023-06-03 12:07:42.286643560 +1000
++++ src/ros2/src/ros2/rcpputils/include/rcpputils/filesystem_helper.hpp	2023-06-03 12:27:46.770853730 +1000
+@@ -41,6 +41,7 @@
+ 
+ #include <string>
+ #include <vector>
++#include <cstdint>
+ 
+ #include "rcpputils/visibility_control.hpp"
+ 
+diff '--color=auto' --unified --recursive --text src_unpatched/ros2/src/ros2/rosbag2/rosbag2_compression/include/rosbag2_compression/compression_options.hpp src/ros2/src/ros2/rosbag2/rosbag2_compression/include/rosbag2_compression/compression_options.hpp
+--- src_unpatched/ros2/src/ros2/rosbag2/rosbag2_compression/include/rosbag2_compression/compression_options.hpp	2023-06-03 12:07:42.389976526 +1000
++++ src/ros2/src/ros2/rosbag2/rosbag2_compression/include/rosbag2_compression/compression_options.hpp	2023-06-03 16:16:35.587635598 +1000
+@@ -16,6 +16,7 @@
+ #define ROSBAG2_COMPRESSION__COMPRESSION_OPTIONS_HPP_
+ 
+ #include <string>
++#include <cstdint>
+ 
+ #include "visibility_control.hpp"
+ 
+Only in src/ros2/src/ros2/rosidl/rosidl_generator_c/rosidl_generator_c: __pycache__
+Only in src/ros2/src/ros2/rosidl/rosidl_generator_cpp/rosidl_generator_cpp: __pycache__
+Only in src/ros2/src/ros2/rosidl_python/rosidl_generator_py/rosidl_generator_py: __pycache__
+Only in src/ros2/src/ros2/rviz/rviz_visual_testing_framework: test
+diff '--color=auto' --unified --recursive --text src_unpatched/ros2/src/ros-tooling/libstatistics_collector/include/libstatistics_collector/moving_average_statistics/types.hpp src/ros2/src/ros-tooling/libstatistics_collector/include/libstatistics_collector/moving_average_statistics/types.hpp
+--- src_unpatched/ros2/src/ros-tooling/libstatistics_collector/include/libstatistics_collector/moving_average_statistics/types.hpp	2023-06-03 12:07:41.956644732 +1000
++++ src/ros2/src/ros-tooling/libstatistics_collector/include/libstatistics_collector/moving_average_statistics/types.hpp	2023-06-03 14:28:42.271053558 +1000
+@@ -16,6 +16,7 @@
+ #define LIBSTATISTICS_COLLECTOR__MOVING_AVERAGE_STATISTICS__TYPES_HPP_
+ 
+ #include <cmath>
++#include <cstdint>
+ #include <sstream>
+ #include <string>
+ 

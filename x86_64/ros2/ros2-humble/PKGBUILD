@@ -18,7 +18,7 @@ arch=('any')
 license=('Apache')
 depends=(
     'ros2-arch-deps'
-    'python-pyqt5-sip4'
+    #'python-pyqt5-sip'
     'assimp'
     'gmock'
 )
@@ -33,7 +33,7 @@ install=ros2-humble.install
 prepare() {
     # Check locale according to
     # https://docs.ros.org/en/rolling/Installation/Ubuntu-Development-Setup.html#set-locale
-        if ! locale | grep LANG | grep 'UTF-8\|utf8' > /dev/null; then
+    if ! locale | grep LANG | grep 'UTF-8\|utf8' > /dev/null; then
         echo 'Your locale must support UTF-8. See ' \
              'https://wiki.archlinux.org/index.php/locale and ' \
              'https://docs.ros.org/en/rolling/Installation/Ubuntu-Development-Setup.html#set-locale'
@@ -43,6 +43,9 @@ prepare() {
     # Clone the repos
     mkdir -p $srcdir/ros2/src
     vcs import $srcdir/ros2/src < $srcdir/ros2/ros2.repos
+
+	# Patch for Python 11 compat until supported by upstream
+	patch --directory="$srcdir" --forward --strip=1 --input="python_11_support.patch"
 }
 
 build() {
